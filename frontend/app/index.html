@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Buddy</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="ai-buddy-container">
+        <div class="ai-buddy-header">
+            <h2>AI Buddy</h2>
+            <button id="openModal" class="ai-buddy-button">AI Assistant 열기</button>
+        </div>
+
+        <!-- Modal -->
+        <div id="aiModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>AI Assistant</h2>
+                    <span class="close">&times;</span>
+                </div>
+                
+                <div class="tabs">
+                    <button class="tab-button active" data-tab="similar-tickets">유사 티켓</button>
+                    <button class="tab-button" data-tab="faq">FAQ</button>
+                    <button class="tab-button" data-tab="ai-response">AI 답변</button>
+                </div>
+
+                <div class="tab-content">
+                    <!-- Similar Tickets Tab -->
+                    <div id="similar-tickets" class="tab-pane active">
+                        <div class="search-section">
+                            <input type="text" id="similarTicketsSearch" placeholder="유사 티켓 검색...">
+                            <button id="searchSimilarTickets">검색</button>
+                        </div>
+                        <div id="similarTicketsResults" class="results-container"></div>
+                    </div>
+
+                    <!-- FAQ Tab -->
+                    <div id="faq" class="tab-pane">
+                        <div class="search-section">
+                            <input type="text" id="faqSearch" placeholder="FAQ 검색...">
+                            <button id="searchFaq">검색</button>
+                        </div>
+                        <div id="faqResults" class="results-container"></div>
+                    </div>
+
+                    <!-- AI Response Tab -->
+                    <div id="ai-response" class="tab-pane">
+                        <div class="search-section">
+                            <button id="generateResponse">답변 생성</button>
+                        </div>
+                        <div id="aiResponse" class="results-container"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://static.freshdev.io/fdk/2.0/assets/fresh_client.js"></script>
+    <script src="app.js"></script>
+</body>
+</html> 

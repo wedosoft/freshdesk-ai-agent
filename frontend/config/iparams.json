@@ -1,0 +1,25 @@
+{
+  "apiEndpoint": {
+    "display_name": "API 엔드포인트",
+    "description": "AI 에이전트 API 엔드포인트 URL",
+    "type": "text",
+    "required": true,
+    "secure": true
+  },
+  "apiKey": {
+    "display_name": "API 키",
+    "description": "AI 에이전트 API 인증 키",
+    "type": "text",
+    "required": true,
+    "secure": true
+  },
+  "minConfidence": {
+    "display_name": "최소 신뢰도",
+    "description": "FAQ 및 유사 티켓 검색의 최소 신뢰도 임계값 (0.0 ~ 1.0)",
+    "type": "number",
+    "required": false,
+    "default": 0.7,
+    "min_value": 0.0,
+    "max_value": 1.0
+  }
+} 

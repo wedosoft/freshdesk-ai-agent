@@ -1,0 +1,94 @@
+{
+  "platform-version": "2.0",
+  "modules": {
+    "common": {
+      "location": {
+        "ticket_topbar": {
+          "url": "index.html",
+          "icon": "styles/images/icon.svg"
+        },
+        "ticket_sidebar": {
+          "url": "index.html"
+        }
+      }
+    },
+    "support_ticket": {}
+  },
+  "engines": {
+    "node": "18.18.0",
+    "fdk": "9.1.0"
+  },
+  "name": "AI Buddy",
+  "description": "AI-powered ticket assistant for Freshdesk agents",
+  "version": "1.0.0",
+  "author": {
+    "name": "Your Company",
+    "email": "support@yourcompany.com",
+    "url": "https://yourcompany.com"
+  },
+  "defaultLocale": "ko",
+  "private": true,
+  "parameters": {
+    "apiEndpoint": {
+      "type": "text",
+      "required": true,
+      "secure": true,
+      "label": "API 엔드포인트",
+      "description": "AI 에이전트 API 엔드포인트 URL"
+    },
+    "apiKey": {
+      "type": "text",
+      "required": true,
+      "secure": true,
+      "label": "API 키",
+      "description": "AI 에이전트 API 인증 키"
+    },
+    "minConfidence": {
+      "type": "number",
+      "required": false,
+      "default": 0.7,
+      "label": "최소 신뢰도",
+      "description": "FAQ 및 유사 티켓 검색의 최소 신뢰도 임계값 (0.0 ~ 1.0)"
+    },
+    "openai_api_key": {
+      "display_name": "OpenAI API Key",
+      "description": "Enter your OpenAI API key",
+      "type": "text",
+      "secure": true,
+      "required": true
+    }
+  },
+  "domainWhitelist": [
+    "*.execute-api.ap-northeast-2.amazonaws.com"
+  ],
+  "screenshots": {
+    "desktop": "screenshots/desktop.png",
+    "mobile": "screenshots/mobile.png"
+  },
+  "documentation": {
+    "url": "https://your-documentation-url.com",
+    "supported": true
+  },
+  "requirements": {
+    "freshdesk": ">=2.0.0"
+  },
+  "supportedLanguages": ["ko", "en"],
+  "platformVersion": "2.0",
+  "security": {
+    "crossDomain": {
+      "domains": ["*.execute-api.ap-northeast-2.amazonaws.com"]
+    }
+  },
+  "product": {
+    "freshdesk": {
+      "location": {
+        "ticket_sidebar": {
+          "url": "ai-response.html"
+        }
+      }
+    }
+  },
+  "whitelisted-domains": [
+    "https://api.openai.com"
+  ]
+} 
