@@ -86,4 +86,35 @@ coverage.xml
 *.tar
 *.gz
 *.rar
+*.7z
+
+# Lambda layers
+lambda/layer/
+.aws-sam/
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+coverage.xml
+*.cover
+
+# Project specific
+*.log
+*.csv
+*.pem
+*.key
+*.cert
+*.zip
+*.tar.gz
+*.tar
+*.gz
+*.rar
 *.7z 
