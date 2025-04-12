@@ -33,28 +33,8 @@
     "api.anthropic.com",
     "api.openai.com"
   ],
-  "description-htmls": [
-    {
-      "src": "styles/images/icon.svg",
-      "content": "<p>AI-powered ticket assistant for Freshdesk agents</p>"
-    }
-  ],
   "features": {
     "serverless": true
-  },
-  "screenshots": [
-    {
-      "src": "screenshots/desktop.png",
-      "size": "desktop"
-    },
-    {
-      "src": "screenshots/mobile.png",
-      "size": "mobile"
-    }
-  ],
-  "documentation": {
-    "url": "https://your-documentation-url.com",
-    "supported": true
   },
   "requirements": {
     "subdomain": "all"
@@ -63,11 +43,25 @@
     "ko",
     "en"
   ],
-  "computed-usage": {},
-  "max-users": {},
-  "max-entities": {},
-  "allowed-usage-attributes": [],
-  "app": {
-    "tracking_id": "s3054mkefj5ryjfwwcub"
+  "interfaces": {
+    "dialog": {
+      "methods": {
+        "showModal": true
+      }
+    },
+    "instance": {
+      "methods": {
+        "context": true,
+        "send": true,
+        "receive": true
+      }
+    },
+    "interface": {
+      "methods": {
+        "trigger": true,
+        "hide": true,
+        "show": true
+      }
+    }
   }
 }

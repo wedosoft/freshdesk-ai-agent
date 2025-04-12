@@ -1,62 +1,22 @@
-app.initialized().then(function(_client) {
-    window.client = _client;
-    
-    // Get modal elements
-    const modal = document.getElementById('aiModal');
+app.initialized().then(function(client) {
+    window.client = client;
     const openModalBtn = document.getElementById('openModal');
-    const closeModalBtn = document.querySelector('.close');
-    const tabButtons = document.querySelectorAll('.tab-button');
-    const tabPanes = document.querySelectorAll('.tab-pane');
-    const aiResponseContainer = document.getElementById('aiResponse');
-    
     // Initialize Claude API
     initializeClaudeApi()
         .then(() => {
             console.log('Claude API initialized successfully');
         })
         .catch(error => {
-            showError(aiResponseContainer, 'Claude API 초기화 중 오류가 발생했습니다: ' + error.message);
+            console.error('Claude API initialization error:', error);
         });
-    
-    async function initializeClaudeApi() {
-        try {
-            const installation = await client.iparams.get();
-            const apiKey = installation.claude_api_key;
-            const model = installation.ai_model || 'claude-3-opus-20240229';
-            
-            if (!apiKey) {
-                showError(aiResponseContainer, 'Claude API 키가 설정되지 않았습니다.');
-                return;
-            }
-            
-            window.claudeApi = new ClaudeAPI(apiKey, model);
-            return window.claudeApi;
-        } catch (error) {
-            throw new Error('설치 파라미터를 가져오는 중 오류가 발생했습니다: ' + error.message);
-        }
-    }
 
-    // Open modal
+    // Modal trigger setup
     openModalBtn.addEventListener('click', function() {
-        modal.style.display = 'block';
-    });
-
-    // Close modal
-    closeModalBtn.addEventListener('click', function() {
-        modal.style.display = 'none';
-    });
-
-    // Tab switching
-    tabButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            // Remove active class from all buttons and panes
-            tabButtons.forEach(btn => btn.classList.remove('active'));
-            tabPanes.forEach(pane => pane.classList.remove('active'));
-
-            // Add active class to clicked button and corresponding pane
-            this.classList.add('active');
-            const tabId = this.getAttribute('data-tab');
-            document.getElementById(tabId).classList.add('active');
+        client.interface.trigger("showModal", {
+            title: "AI Assistant",
+            template: "views/modal.html"
+        }).catch(function(error) {
+            console.error('Error opening modal:', error);
         });
     });
 
@@ -104,12 +64,27 @@ app.initialized().then(function(_client) {
             showError(resultsContainer, 'Claude API가 초기화되지 않았습니다.');
             return;
         }
-
         generateResponse(resultsContainer);
     });
-}).catch(function(error) {
-    console.error('App initialization failed:', error);
 });
+
+async function initializeClaudeApi() {
+    try {
+        const installation = await client.iparams.get();
+        const apiKey = installation.claude_api_key;
+        const model = installation.ai_model || 'claude-3-opus-20240229';
+        
+        if (!apiKey) {
+            console.error('Claude API 키가 설정되지 않았습니다.');
+            return;
+        }
+        
+        window.claudeApi = new ClaudeAPI(apiKey, model);
+        return window.claudeApi;
+    } catch (error) {
+        throw new Error('설치 파라미터를 가져오는 중 오류가 발생했습니다: ' + error.message);
+    }
+}
 
 // Helper functions
 function showLoading(container) {
@@ -243,23 +218,13 @@ function addCopyFunctionality(container) {
     container.querySelectorAll('.copy-button').forEach(button => {
         button.addEventListener('click', function() {
             const text = this.getAttribute('data-text');
-            copyToReply(text);
+            // text를 사용해서 실제로 복사하는 코드 추가
+            client.interface.trigger('setText', { text: text }).then(() => {
+    client.interface.trigger('showNotify', {
+        type: 'success',
+        message: '답변이 복사되었습니다.'
+    });
         });
+    });
     });
 }
-
-// Copy text to reply
-function copyToReply(text) {
-    client.instance.send({
-        message: {
-            type: 'copyToReply',
-            text: text
-        }
-    })
-    .catch(error => {
-        client.interface.trigger('showNotify', {
-            type: 'error',
-            message: '답변에 복사하는 중 오류가 발생했습니다: ' + error.message
-        });
-    });
-} 
