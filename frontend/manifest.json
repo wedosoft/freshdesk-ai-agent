@@ -1,18 +1,18 @@
 {
-  "platform-version": "2.0",
+  "platform-version": "3.0",
   "modules": {
-    "common": {
+    "support_ticket": {
       "location": {
-        "ticket_topbar": {
+        "ticket_sidebar": {
           "url": "index.html",
           "icon": "styles/images/icon.svg"
         },
-        "ticket_sidebar": {
-          "url": "index.html"
+        "ticket_top_navigation": {
+          "url": "index.html",
+          "icon": "styles/images/icon.svg"
         }
       }
-    },
-    "support_ticket": {}
+    }
   },
   "engines": {
     "node": "18.18.0",
@@ -28,67 +28,46 @@
   },
   "defaultLocale": "ko",
   "private": true,
-  "parameters": {
-    "apiEndpoint": {
-      "type": "text",
-      "required": true,
-      "secure": true,
-      "label": "API 엔드포인트",
-      "description": "AI 에이전트 API 엔드포인트 URL"
-    },
-    "apiKey": {
-      "type": "text",
-      "required": true,
-      "secure": true,
-      "label": "API 키",
-      "description": "AI 에이전트 API 인증 키"
-    },
-    "minConfidence": {
-      "type": "number",
-      "required": false,
-      "default": 0.7,
-      "label": "최소 신뢰도",
-      "description": "FAQ 및 유사 티켓 검색의 최소 신뢰도 임계값 (0.0 ~ 1.0)"
-    },
-    "openai_api_key": {
-      "display_name": "OpenAI API Key",
-      "description": "Enter your OpenAI API key",
-      "type": "text",
-      "secure": true,
-      "required": true
-    }
-  },
-  "domainWhitelist": [
-    "*.execute-api.ap-northeast-2.amazonaws.com"
+  "allowed-domains": [
+    "*.execute-api.ap-northeast-2.amazonaws.com",
+    "api.anthropic.com",
+    "api.openai.com"
   ],
-  "screenshots": {
-    "desktop": "screenshots/desktop.png",
-    "mobile": "screenshots/mobile.png"
+  "description-htmls": [
+    {
+      "src": "styles/images/icon.svg",
+      "content": "<p>AI-powered ticket assistant for Freshdesk agents</p>"
+    }
+  ],
+  "features": {
+    "serverless": true
   },
+  "screenshots": [
+    {
+      "src": "screenshots/desktop.png",
+      "size": "desktop"
+    },
+    {
+      "src": "screenshots/mobile.png",
+      "size": "mobile"
+    }
+  ],
   "documentation": {
     "url": "https://your-documentation-url.com",
     "supported": true
   },
   "requirements": {
-    "freshdesk": ">=2.0.0"
+    "subdomain": "all"
   },
-  "supportedLanguages": ["ko", "en"],
-  "platformVersion": "2.0",
-  "security": {
-    "crossDomain": {
-      "domains": ["*.execute-api.ap-northeast-2.amazonaws.com"]
-    }
-  },
-  "product": {
-    "freshdesk": {
-      "location": {
-        "ticket_sidebar": {
-          "url": "ai-response.html"
-        }
-      }
-    }
-  },
-  "whitelisted-domains": [
-    "https://api.openai.com"
-  ]
-} 
+  "supported-languages": [
+    "ko",
+    "en"
+  ],
+  "computed-usage": {},
+  "max-users": {},
+  "max-entities": {},
+  "allowed-usage-attributes": [],
+  "app": {
+    "tracking_id": "s3054mkefj5ryjfwwcub"
+  }
+}

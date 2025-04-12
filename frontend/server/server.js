@@ -1,69 +1,27 @@
-const express = require('express');
-const app = express();
-const bodyParser = require('body-parser');
-const cors = require('cors');
+const { httpRequestHandler, events } = require('./lib/handle-request');
 
-// Middleware
-app.use(cors());
-app.use(bodyParser.json());
-
-// Routes
-app.post('/faq', async (req, res) => {
-    try {
-        const { ticket_id, query } = req.body;
-        
-        // TODO: Implement FAQ search logic
-        const results = await searchFaq(ticket_id, query);
-        
-        res.json({ results });
-    } catch (error) {
-        console.error('Error in FAQ search:', error);
-        res.status(500).json({ error: 'Internal server error' });
+/**
+ * This is the entry point for the Freshworks FDK serverless app.
+ * We're using client-side API calls to Claude, so this is minimal.
+ */
+exports = {
+  events: events,
+  
+  // Request handler for serverless invocation
+  requestHandler: async function(args) {
+    const { type } = args;
+    
+    // Handle the HTTP request
+    if (type === 'httpRequest') {
+      return await httpRequestHandler(args.data);
     }
-});
-
-app.post('/similar-tickets', async (req, res) => {
-    try {
-        const { ticket_id, query } = req.body;
-        
-        // TODO: Implement similar tickets search logic
-        const results = await searchSimilarTickets(ticket_id, query);
-        
-        res.json({ results });
-    } catch (error) {
-        console.error('Error in similar tickets search:', error);
-        res.status(500).json({ error: 'Internal server error' });
-    }
-});
-
-app.post('/generate-response', async (req, res) => {
-    try {
-        const { ticket_id } = req.body;
-        
-        // TODO: Implement AI response generation logic
-        const response = await generateAiResponse(ticket_id);
-        
-        res.json({ response });
-    } catch (error) {
-        console.error('Error in AI response generation:', error);
-        res.status(500).json({ error: 'Internal server error' });
-    }
-});
-
-// Helper functions
-async function searchFaq(ticket_id, query) {
-    // TODO: Implement FAQ search using DynamoDB
-    return [];
-}
-
-async function searchSimilarTickets(ticket_id, query) {
-    // TODO: Implement similar tickets search using DynamoDB
-    return [];
-}
-
-async function generateAiResponse(ticket_id) {
-    // TODO: Implement AI response generation
-    return '';
-}
-
-module.exports = app; 
+    
+    // Default response for unsupported request types
+    return {
+      status: 400,
+      response: JSON.stringify({
+        message: 'Unsupported request type'
+      })
+    };
+  }
+}; 
